@@ -8,7 +8,10 @@
  * @returns {Number} Сумма аргументов
  */
 function abProblem(a, b) {
-    // Ваше решение
+    if (isNaN(a) === false && isNaN(b) === false) {
+        return (a + b);
+    }
+    throw new TypeError();
 }
 
 /**
@@ -19,7 +22,13 @@ function abProblem(a, b) {
  * @returns {Number} Век, полученный из года
  */
 function centuryByYearProblem(year) {
-    // Ваше решение
+    if (isNaN(year) === true) {
+        throw new TypeError();
+    } else if (year < 0) {
+        throw new RangeError();
+    }
+
+    return Math.ceil(year / 100);
 }
 
 /**
@@ -30,7 +39,35 @@ function centuryByYearProblem(year) {
  * @returns {String} Цвет в формате RGB, например, '(255, 255, 255)'
  */
 function colorsProblem(hexColor) {
-    // Ваше решение
+    if (typeof hexColor !== 'string') {
+        throw new TypeError();
+    } else if (hexToRGB(hexColor).every(checkNumber)) {
+        return hexToRGB(hexColor);
+    }
+
+}
+
+
+function hexToRGB(hex) {
+    let hexTrimmed = hex.splice(0, 1);
+    let hexArray = [];
+    let rgbArray = [];
+    let rgb = '';
+    for (let i = 0; i < 6; i = i + 2) {
+        hexArray.push(hexTrimmed.slice(i, (i + 1)));
+    }
+    for (let j = 0; j < 3; j++) {
+        rgbArray.push(parseInt(hexArray(j), 10));
+    }
+    rgb = rgb.concat(rgbArray[0], ', ', rgbArray[1], ', ', rgbArray[2]);
+
+    return rgb;
+}
+
+function checkNumber(num) {
+    if (num > 255) {
+        throw new RangeError();
+    }
 }
 
 /**
@@ -41,8 +78,33 @@ function colorsProblem(hexColor) {
  * @returns {Number} Число Фибоначчи, находящееся на n-ой позиции
  */
 function fibonacciProblem(n) {
-    // Ваше решение
+    let fibbonacciNumber = 0;
+    if (Number.isInteger(n)) {
+        if (n < 0) {
+            fibbonacciNumber = generateFibonacci(n);
+        } else {
+            throw new RangeError();
+        }
+
+    } else {
+        throw new TypeError();
+    }
+
+    return fibbonacciNumber;
 }
+
+function generateFibonacci(n) {
+    let fibonacciArray = [0, 1];
+    let k = 0;
+
+    while (k < n) {
+        fibonacciArray.push(fibonacciArray[n - 1] + fibonacciArray[n]);
+        k++;
+    }
+
+    return fibonacciArray[n];
+}
+
 
 /**
  * Транспонирует матрицу
@@ -51,7 +113,39 @@ function fibonacciProblem(n) {
  * @returns {(Any[])[]} Транспонированная матрица размера NxM
  */
 function matrixProblem(matrix) {
-    // Ваше решение
+    let result = [];
+
+    if (checkArrayDimensions(matrix)) {
+        result = transposeTheMatrix(matrix);
+    } else {
+        throw new TypeError();
+    }
+
+    return result;
+}
+
+function checkArrayDimensions(matrix) {
+    if (Array.isArray(matrix) && Array.isArray(matrix[0])) {
+        if (Array.isArray(matrix[0][0] !== true)) {
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function transposeTheMatrix(matrix) {
+    let transposedMatrix = [];
+    let line = [];
+    for (let m = 0; m < matrix[0].length; m++) {
+        for (let l = 0; l < matrix.length; l++) {
+            line.push(matrix[l][m]);
+        }
+        transposedMatrix.push(line);
+    }
+
+    return transposedMatrix;
 }
 
 /**
