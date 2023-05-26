@@ -80,7 +80,7 @@ function checkNumber(num) {
 function fibonacciProblem(n) {
     let fibbonacciNumber = 0;
     if (Number.isInteger(n)) {
-        if (n < 0) {
+        if (n >= 0) {
             fibbonacciNumber = generateFibonacci(n);
         } else {
             throw new RangeError();
