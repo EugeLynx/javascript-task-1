@@ -8,7 +8,7 @@
  * @returns {Number} Сумма аргументов
  */
 function abProblem(a, b) {
-    if (isNaN(a) === false && isNaN(b) === false) {
+    if (typeof a === 'number' && typeof b === 'number') {
         return (a + b);
     }
     throw new TypeError();
@@ -22,9 +22,10 @@ function abProblem(a, b) {
  * @returns {Number} Век, полученный из года
  */
 function centuryByYearProblem(year) {
-    if (isNaN(year) === true) {
+    if (typeof year !== 'number') {
         throw new TypeError();
-    } else if (year < 0) {
+    }
+    if (year < 0) {
         throw new RangeError();
     }
 
@@ -42,32 +43,35 @@ function colorsProblem(hexColor) {
     if (typeof hexColor !== 'string') {
         throw new TypeError();
     } else if (hexToRGB(hexColor).every(checkNumber)) {
-        return hexToRGB(hexColor);
+        let rgbArray = hexToRGB(hexColor);
+        let rgb = ''.concat('(', rgbArray[0], ', ', rgbArray[1], ', ', rgbArray[2], ')');
+
+        return rgb;
     }
 
 }
 
-
-function hexToRGB(hex) {
-    let hexTrimmed = hex.splice(0, 1);
+function hexToRGB(hexString) {
+    let hexTrimmed = hexString.slice(1);
     let hexArray = [];
     let rgbArray = [];
-    let rgb = '';
+
     for (let i = 0; i < 6; i = i + 2) {
-        hexArray.push(hexTrimmed.slice(i, (i + 1)));
+        hexArray.push(hexTrimmed.slice(i, (i + 2)));
     }
     for (let j = 0; j < 3; j++) {
-        rgbArray.push(parseInt(hexArray(j), 10));
+        rgbArray.push(parseInt(hexArray[j], 16));
     }
-    rgb = rgb.concat(rgbArray[0], ', ', rgbArray[1], ', ', rgbArray[2]);
 
-    return rgb;
+    return rgbArray;
 }
 
 function checkNumber(num) {
     if (num > 255) {
         throw new RangeError();
     }
+
+    return true;
 }
 
 /**
@@ -78,10 +82,10 @@ function checkNumber(num) {
  * @returns {Number} Число Фибоначчи, находящееся на n-ой позиции
  */
 function fibonacciProblem(n) {
-    let fibbonacciNumber = 0;
+    let fibonacciNumber = 0;
     if (Number.isInteger(n)) {
         if (n >= 0) {
-            fibbonacciNumber = generateFibonacci(n);
+            fibonacciNumber = generateFibonacci(n);
         } else {
             throw new RangeError();
         }
@@ -90,7 +94,7 @@ function fibonacciProblem(n) {
         throw new TypeError();
     }
 
-    return fibbonacciNumber;
+    return fibonacciNumber;
 }
 
 function generateFibonacci(n) {
@@ -126,8 +130,7 @@ function matrixProblem(matrix) {
 
 function checkArrayDimensions(matrix) {
     if (Array.isArray(matrix) && Array.isArray(matrix[0])) {
-        if (Array.isArray(matrix[0][0] !== true)) {
-
+        if (!Array.isArray(matrix[0][0])) {
             return true;
         }
     }
@@ -137,8 +140,8 @@ function checkArrayDimensions(matrix) {
 
 function transposeTheMatrix(matrix) {
     let transposedMatrix = [];
-    let line = [];
     for (let m = 0; m < matrix[0].length; m++) {
+        let line = [];
         for (let l = 0; l < matrix.length; l++) {
             line.push(matrix[l][m]);
         }
@@ -157,8 +160,16 @@ function transposeTheMatrix(matrix) {
  * @returns {String} Число n в системе счисления targetNs
  */
 function numberSystemProblem(n, targetNs) {
-    // Ваше решение
+    if ((!Number.isInteger(n)) || (!Number.isInteger(targetNs))) {
+        throw new TypeError();
+    }
+    if ((targetNs < 2) && (targetNs > 36)) {
+        throw new RangeError();
+    }
+
+    return Number.parseInt(n, targetNs);
 }
+
 
 /**
  * Проверяет соответствие телефонного номера формату
@@ -166,7 +177,26 @@ function numberSystemProblem(n, targetNs) {
  * @returns {Boolean} Если соответствует формату, то true, а иначе false
  */
 function phoneProblem(phoneNumber) {
-    // Ваше решение
+    let Boolean = false;
+    phoneNumber = phoneNumber.split('-');
+    let start = false;
+    let middle = false;
+    let ending = false;
+
+    if ((phoneNumber[0] === 8) && (phoneNumber[1] === 800)) {
+        start = true;
+    }
+    if ((phoneNumber[2].length === 3)) {
+        middle = true;
+    }
+    if ((phoneNumber[3].length === 2) && (phoneNumber[4].length === 2)) {
+        ending = true;
+    }
+    if ((start === true) && (middle === true) && (ending === true)) {
+        Boolean = true;
+    }
+
+    return Boolean;
 }
 
 /**
@@ -176,7 +206,17 @@ function phoneProblem(phoneNumber) {
  * @returns {Number} Количество улыбающихся смайликов в строке
  */
 function smilesProblem(text) {
-    // Ваше решение
+    let result = '';
+    if (typeof result !== 'string') {
+        throw new TypeError();
+    } else {
+        let smileCount = 0;
+        for (let i = 0; i < text.length; i++) {
+            
+        }
+    }
+
+    return result;
 }
 
 /**
