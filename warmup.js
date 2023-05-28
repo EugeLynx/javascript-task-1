@@ -167,7 +167,7 @@ function numberSystemProblem(n, targetNs) {
         throw new RangeError();
     }
 
-    return Number.parseInt(n, targetNs);
+    return n.toString(targetNs);
 }
 
 
@@ -178,12 +178,12 @@ function numberSystemProblem(n, targetNs) {
  */
 function phoneProblem(phoneNumber) {
     let Boolean = false;
-    phoneNumber = phoneNumber.split('-');
     let start = false;
     let middle = false;
     let ending = false;
+    phoneNumber = phoneNumber.split('-');
 
-    if ((phoneNumber[0] === 8) && (phoneNumber[1] === 800)) {
+    if ((phoneNumber[0] === '8') && (phoneNumber[1] === '800')) {
         start = true;
     }
     if ((phoneNumber[2].length === 3)) {
@@ -192,7 +192,7 @@ function phoneProblem(phoneNumber) {
     if ((phoneNumber[3].length === 2) && (phoneNumber[4].length === 2)) {
         ending = true;
     }
-    if ((start === true) && (middle === true) && (ending === true)) {
+    if (start && middle && ending) {
         Boolean = true;
     }
 
@@ -209,14 +209,9 @@ function smilesProblem(text) {
     let result = '';
     if (typeof result !== 'string') {
         throw new TypeError();
-    } else {
-        let smileCount = 0;
-        for (let i = 0; i < text.length; i++) {
-            
-        }
     }
 
-    return result;
+    return text.match(/:-\)/).length;
 }
 
 /**
@@ -226,7 +221,41 @@ function smilesProblem(text) {
  * @returns {'x' | 'o' | 'draw'} Результат игры
  */
 function ticTacToeProblem(field) {
-    // Ваше решение
+    const vertical = checkVertical(field);
+    const horizontal = checkHorizontal(field);
+    const mainDiagonal = checkMainDiagonal(field);
+    const secondaryDiagonal = checkSecondaryDiagonal(field);
+
+    return (vertical ?? horizontal ?? mainDiagonal ?? secondaryDiagonal ?? 'draw');
+}
+
+function checkVertical(field) {
+    for (let i = 0; i < 3; i++) {
+        if (field[i][0] === field[i][1] && field[i][1] === field[i][2]) {
+            return field[i][0];
+        }
+    }
+    return null;
+}
+function checkHorizontal(field) {
+    for (let j = 0; j < 3; j++) {
+        if (field[0][j] === field[1][j] && field[1][j] === field[2][j]) {
+            return field[0][j];
+        }
+    }
+    return null;
+}
+function checkMainDiagonal(field) {
+    if (field[0][0] === field[1][1] && field[1][1] === field[2][2]) {
+        return field[0][0];
+    }
+    return null;
+}
+function checkSecondaryDiagonal(field) {
+    if (field[0][2] === field[1][1] && field[1][1] === field[2][0]) {
+        return field[0][2];
+    }
+    return null;
 }
 
 module.exports = {
